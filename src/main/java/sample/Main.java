@@ -64,8 +64,26 @@ public class Main extends Application {
         }
     }
 
+    public static void insert(String name, int age){
+        //заполняем таблицу данными
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+            Statement statement = conn.createStatement();
+            String sql = "INSERT INTO Company (name, age)" +
+                    "VALUES ('" + name + "', " + age + ");";
+            statement.executeUpdate(sql);
+            statement.close();
+            conn.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
+
     public static void main(String[] args) {
         create();
+        insert("Вася", 15);
+        insert("Коля", 23);
         launch(args);
     }
 
