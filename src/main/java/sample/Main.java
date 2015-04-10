@@ -46,15 +46,21 @@ public class Main extends Application {
             Class.forName("org.sqlite.JDBC");
             Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
             Statement statement = conn.createStatement();
-            String sql = "CREATE TABLE COMPANY " +
-                    "(ID        INT     PRIMARY KEY     NOT NULL," +
-                    " NAME      TEXT                    NOT NULL," +
-                    " AGE       INT                     NOT NULL)";
+            String sql = "CREATE TABLE IF NOT EXISTS Company " +
+                    "(id        INTEGER     PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    " name      TEXT        NOT NULL," +
+                    " age       INTEGER     NOT NULL)";
+            /*
+            TODO
+            получше изучить синтаксис SQL в SQLite,
+            в частности AUTOINCREMENT
+            http://sqlite.org/autoinc.html
+            */
             statement.executeUpdate(sql);
             statement.close();
             conn.close();
         } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     }
 
