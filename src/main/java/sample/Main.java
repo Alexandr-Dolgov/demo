@@ -81,6 +81,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        //для администрированя базы данных я пользуюсь http://sqlitebrowser.org/
         create();
         insert("Вася", 15);
         insert("Коля", 23);
