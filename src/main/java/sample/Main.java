@@ -2,12 +2,14 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class Main extends Application {
     private Stage primaryStage;
@@ -39,7 +41,25 @@ public class Main extends Application {
         }
     }
 
+    private static void create(){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+            Statement statement = conn.createStatement();
+            String sql = "CREATE TABLE COMPANY " +
+                    "(ID        INT     PRIMARY KEY     NOT NULL," +
+                    " NAME      TEXT                    NOT NULL," +
+                    " AGE       INT                     NOT NULL)";
+            statement.executeUpdate(sql);
+            statement.close();
+            conn.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
+
     public static void main(String[] args) {
+        create();
         launch(args);
     }
 
